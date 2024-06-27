@@ -28,18 +28,24 @@ namespace PosWebApp.Controllers
             return CreatedAtAction(nameof(GetAvailableProducts), new { id = product.Id }, product);
         }
 
-        [HttpPut]
-        public IActionResult UpdateProduct(Product product)
+        [HttpPut("{id}")]
+        public IActionResult UpdateProduct(int id, Product product)
         {
-            _productService.UpdateProduct(product.Name, product.Price, product.Quantity);
+            _productService.UpdateProduct(id, product.Price, product.Quantity);
             return NoContent();
         }
 
-        [HttpDelete("{name}")]
-        public IActionResult RemoveProduct(string name)
+        [HttpDelete("{id}")]
+        public IActionResult RemoveProduct(int id)
         {
-            _productService.RemoveProduct(name);
+            _productService.RemoveProduct(id);
             return NoContent();
+        }
+
+        [HttpGet("all")]
+        public IActionResult ViewProducts()
+        {
+            return Ok(_productService.ViewProducts());
         }
     }
 }

@@ -1,51 +1,54 @@
-﻿using PosWebApp.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
 using PosWebApp.Data;
+using PosWebApp.Models;
+
 namespace PosWebApp.Services
 {
     public class ProductService
     {
-        private readonly POSDbContext dbContext;
+        private readonly POSDbContext _dbContext;
 
         public ProductService(POSDbContext context)
         {
-            dbContext = context;
+            _dbContext = context;
         }
 
         public void AddProduct(string name, decimal price, int quantity)
         {
-            dbContext.Products.Add(new Product { Name = name, Price = price, Quantity = quantity });
-            dbContext.SaveChanges();
+            _dbContext.Products.Add(new Product { Name = name, Price = price, Quantity = quantity });
+            _dbContext.SaveChanges();
         }
 
-        public void UpdateProduct(string name, decimal price, int quantity)
+        public void UpdateProduct(int id, decimal price, int quantity)
         {
-            var product = dbContext.Products.FirstOrDefault(p => p.Name == name);
+            var product = _dbContext.Products.FirstOrDefault(p => p.Id == id);
             if (product != null)
             {
                 product.Price = price;
                 product.Quantity = quantity;
-                dbContext.SaveChanges();
+                _dbContext.SaveChanges();
             }
         }
 
-        public void RemoveProduct(string name)
+        public void RemoveProduct(int id)
         {
-            var product = dbContext.Products.FirstOrDefault(p => p.Name == name);
+            var product = _dbContext.Products.FirstOrDefault(p => p.Id == id);
             if (product != null)
             {
-                dbContext.Products.Remove(product);
-                dbContext.SaveChanges();
+                _dbContext.Products.Remove(product);
+                _dbContext.SaveChanges();
             }
         }
 
         public List<Product> GetAvailableProducts()
         {
-            return dbContext.Products.Where(p => p.Quantity > 0).ToList();
+            return _dbContext.Products.Where(p => p.Quantity > 0).ToList();
         }
 
         public List<Product> ViewProducts()
         {
-            return dbContext.Products.ToList();
+            return _dbContext.Products.ToList();
         }
     }
 }

@@ -13,5 +13,6 @@ namespace PosWebApp.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Sale> Sales { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<SaleProductDetail> SaleProductDetails { get; set; }
     }
 }

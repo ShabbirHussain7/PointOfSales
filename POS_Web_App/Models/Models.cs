@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PosWebApp.Models
 {
@@ -24,11 +23,21 @@ namespace PosWebApp.Models
         public int Quantity { get; set; }
     }
 
+    public class SaleProductDetail
+    {
+        [Key]
+        public int Id { get; set; }
+        public int SaleId { get; set; }
+        public string ProductName { get; set; }
+        public int QuantityBought { get; set; }
+        public decimal Price { get; set; }
+    }
+
     public class Sale
     {
         [Key]
         public int Id { get; set; }
-        public List<Product> Products { get; set; } = new List<Product>();
+        public List<SaleProductDetail> ProductDetails { get; set; } = new List<SaleProductDetail>();
         public decimal TotalAmount { get; set; }
     }
 }
