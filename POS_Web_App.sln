@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS_Entity_Framework", "POS_Entity_Framework\POS_Entity_Framework.csproj", "{D622880E-653E-44B5-A6DE-89CBF39EDEB8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POS_Web_App", "POS_Web_App\POS_Web_App.csproj", "{77599FD8-18A1-4D3B-A893-D590172767FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D622880E-653E-44B5-A6DE-89CBF39EDEB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D622880E-653E-44B5-A6DE-89CBF39EDEB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D622880E-653E-44B5-A6DE-89CBF39EDEB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D622880E-653E-44B5-A6DE-89CBF39EDEB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77599FD8-18A1-4D3B-A893-D590172767FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77599FD8-18A1-4D3B-A893-D590172767FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77599FD8-18A1-4D3B-A893-D590172767FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77599FD8-18A1-4D3B-A893-D590172767FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {A0685329-DBCE-4DBC-A532-3A78769F3A63}
+		SolutionGuid = {902A6141-B67C-4527-9A40-4E1748106AF6}
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,6 @@
-﻿namespace POS
+﻿using PosWebApp.Models;
+using PosWebApp.Data;
+namespace PosWebApp.Services
 {
     public class ProductService
     {

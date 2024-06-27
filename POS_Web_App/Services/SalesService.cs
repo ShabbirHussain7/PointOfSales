@@ -1,4 +1,7 @@
-﻿namespace POS
+﻿using PosWebApp.Models;
+using PosWebApp.Data;
+using Microsoft.EntityFrameworkCore;
+namespace PosWebApp.Services
 {
     public class SalesService
     {
@@ -22,7 +25,12 @@
                 dbContext.SaveChanges();
             }
         }
-        
+
+        public Sale GetSaleById(int id)
+        {
+            return dbContext.Sales.Include(s=>s.Products).FirstOrDefault(s => s.Id == id);
+        }
+
         public decimal CalculateTotal(Sale sale)
         {
             return sale.Products.Sum(p => p.Price);
