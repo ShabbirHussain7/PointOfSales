@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using POS.Models;
 
-namespace POS
+namespace POS.Database
 {
     public class POSDbContext(DbContextOptions<POSDbContext> options) : DbContext(options)
     {

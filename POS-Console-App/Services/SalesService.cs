@@ -1,4 +1,7 @@
-﻿namespace POS
+﻿using POS.Models;
+using POS.Database;
+
+namespace POS.Services
 {
     public class SalesService
     {

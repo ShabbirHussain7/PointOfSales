@@ -1,4 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using POS.Services;
+using POS.Models;
+using POS.Database;
 
 namespace POS
 {
