@@ -145,7 +145,7 @@ namespace POS
                         decimal newPrice = decimal.Parse(Console.ReadLine());
                         Console.WriteLine("Enter new quantity:");
                         int newQuantity = int.Parse(Console.ReadLine());
-                        productService.UpdateProduct(allProducts[productIndexToUpdate].Name, newPrice, newQuantity);
+                        productService.UpdateProduct(allProducts[productIndexToUpdate].Id, newPrice, newQuantity);
                         break;
 
                     case "6":
@@ -161,7 +161,7 @@ namespace POS
                         }
                         int productIndexToRemove = int.Parse(Console.ReadLine()) - 1;
                         
-                        productService.RemoveProduct(removeProducts[productIndexToRemove].Name);
+                        productService.RemoveProduct(removeProducts[productIndexToRemove].Id);
 
                         break;
                     #endregion
@@ -184,30 +184,14 @@ namespace POS
                         int productIndex = int.Parse(Console.ReadLine()) - 1;
                         Console.WriteLine("Enter the quantity to buy:");
                         int quantityToBuy = int.Parse(Console.ReadLine());
-                        salesService.AddProductToSale(availableProducts[productIndex].Name, quantityToBuy);
+                        salesService.AddProductToSale(availableProducts[productIndex].Id, quantityToBuy);
                         break;
 
-                    case "8":
-                        if (currentUser == null || currentUser.Role != UserRole.Cashier)
-                        {
-                            Console.WriteLine("Access denied. Only cashiers can calculate total.");
-                            break;
-                        }
-                        var sale = dbContext.Sales.Include(s => s.Products).FirstOrDefault();
-                        if (sale != null)
-                        {
-                            var total = salesService.CalculateTotal(sale);
-                            salesService.GenerateReceipt(sale);
-                        }
-                        else
-                        {
-                            Console.WriteLine("No sale found");
-                        }
-                        break;
+                   
                     #endregion
 
                     #region Others
-                    case "9":
+                    case "8":
                         return;
 
                     default:
