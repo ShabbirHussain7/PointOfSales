@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using POS.DTOs;
 
 namespace POS.Models
 {
@@ -6,7 +7,7 @@ namespace POS.Models
     {
         [Key]
         public int Id { get; set; }
-        public List<Product> Products { get; set; } = new List<Product>();
+        public List<SaleProductDetail> ProductDetails { get; set; } = new List<SaleProductDetail>();
         public decimal TotalAmount { get; set; }
     }
 }

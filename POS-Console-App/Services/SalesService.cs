@@ -1,44 +1,72 @@
-﻿using POS.Models;
+﻿using Microsoft.EntityFrameworkCore;
 using POS.Database;
+using POS.Models;
+using POS.DTOs;
 
 namespace POS.Services
 {
     public class SalesService
     {
-        private readonly POSDbContext dbContext;
+        private readonly POSDbContext _dbContext;
 
         public SalesService(POSDbContext context)
         {
-            dbContext = context;
+            _dbContext = context;
         }
 
-        public void AddProductToSale(string productName, int quantityToBuy)
+        public void AddProductsToSale(AddProductsToSaleDto addProductsToSaleDto)
         {
-            var product = dbContext.Products.FirstOrDefault(p => p.Name == productName);
-            if (product != null && product.Quantity >= quantityToBuy)
+            var sale = new Sale();
+
+            foreach (var productQuantity in addProductsToSaleDto.Products)
             {
-                var sale = new Sale();
-                sale.Products.Add(product);
-                sale.TotalAmount += product.Price * quantityToBuy;
-                product.Quantity -= quantityToBuy;
-                dbContext.Sales.Add(sale);
-                dbContext.SaveChanges();
+                var product = _dbContext.Products.FirstOrDefault(p => p.Id == productQuantity.ProductId);
+                if (product != null && product.Quantity >= productQuantity.Quantity)
+                {
+                    var saleProductDetail = new SaleProductDetail
+                    {
+                        SaleId = sale.Id,
+                        ProductName = product.Name,
+                        QuantityBought = productQuantity.Quantity,
+                        Price = product.Price
+                    };
+
+                    sale.ProductDetails.Add(saleProductDetail);
+                    sale.TotalAmount += product.Price * productQuantity.Quantity;
+                    product.Quantity -= productQuantity.Quantity;
+                    _dbContext.SaleProductDetails.Add(saleProductDetail);
+                }
             }
-        }
-        
-        public decimal CalculateTotal(Sale sale)
-        {
-            return sale.Products.Sum(p => p.Price);
+
+            _dbContext.Sales.Add(sale);
+            _dbContext.SaveChanges();
         }
 
-        public void GenerateReceipt(Sale sale)
+        public Sale GetSaleById(int id)
         {
-            Console.WriteLine("Receipt:");
-            foreach (var product in sale.Products)
+            return _dbContext.Sales
+                .Include(s => s.ProductDetails)
+                .FirstOrDefault(s => s.Id == id);
+        }
+
+        public ReceiptDto GenerateReceipt(Sale sale)
+        {
+            var receipt = new ReceiptDto
             {
-                Console.WriteLine($"{product.Name} - {product.Price:C}");
+                TotalAmount = sale.TotalAmount
+            };
+
+            foreach (var detail in sale.ProductDetails)
+            {
+                receipt.ProductDetails.Add(new ReceiptProductDetailDto
+                {
+                    ProductName = detail.ProductName,
+                    QuantityBought = detail.QuantityBought,
+                    Price = detail.Price
+                });
             }
-            Console.WriteLine($"Total: {sale.TotalAmount:C}");
+
+            return receipt;
         }
     }
 }

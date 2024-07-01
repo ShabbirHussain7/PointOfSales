@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using POS.DTOs;
 using POS.Models;
 
 namespace POS.Database
@@ -8,5 +9,6 @@ namespace POS.Database
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Sale> Sales { get; set; }
+        public DbSet<SaleProductDetail> SaleProductDetails { get; set; }
     }
 }
