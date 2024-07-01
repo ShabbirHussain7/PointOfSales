@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "POS-Console-App\ConsoleApp.csproj", "{CD1B11A0-3B21-46C9-8CBA-D3957B5A0089}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "POS_Web_App\WebApp.csproj", "{54FD2C67-A9C4-4132-BE6F-7CD0034C5B6E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "POS_Console_App\ConsoleApp.csproj", "{F2DF220C-DFB4-4F01-A677-EA507B4B865B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CD1B11A0-3B21-46C9-8CBA-D3957B5A0089}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CD1B11A0-3B21-46C9-8CBA-D3957B5A0089}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CD1B11A0-3B21-46C9-8CBA-D3957B5A0089}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CD1B11A0-3B21-46C9-8CBA-D3957B5A0089}.Release|Any CPU.Build.0 = Release|Any CPU
 		{54FD2C67-A9C4-4132-BE6F-7CD0034C5B6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{54FD2C67-A9C4-4132-BE6F-7CD0034C5B6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54FD2C67-A9C4-4132-BE6F-7CD0034C5B6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54FD2C67-A9C4-4132-BE6F-7CD0034C5B6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2DF220C-DFB4-4F01-A677-EA507B4B865B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2DF220C-DFB4-4F01-A677-EA507B4B865B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2DF220C-DFB4-4F01-A677-EA507B4B865B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2DF220C-DFB4-4F01-A677-EA507B4B865B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

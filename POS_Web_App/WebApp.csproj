@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\POS-Console-App\ConsoleApp.csproj" />
+    <ProjectReference Include="..\POS_Console_App\ConsoleApp.csproj" />
   </ItemGroup>
 
 </Project>
