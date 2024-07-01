@@ -18,6 +18,7 @@ internal class Program
         builder.Services.AddScoped<HashingService>();
         builder.Services.AddScoped<ProductService>();
         builder.Services.AddScoped<SalesService>();
+        builder.Services.AddScoped<SaleSessionService>();
         builder.Services.AddScoped<UserService>();
         builder.Services.AddSwaggerGen(c =>
         {

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using POS.DTOs;
 using POS.Services;
 
 namespace POS.Controllers
@@ -14,10 +16,10 @@ namespace POS.Controllers
             _salesService = salesService;
         }
 
-        [HttpPost]
-        public IActionResult AddProductToSale(int productId, int quantity)
+        [HttpPost("add")]
+        public IActionResult AddProductsToSale([FromBody] AddProductsToSaleDto addProductsToSaleDto)
         {
-            _salesService.AddProductToSale(productId, quantity);
+            _salesService.AddProductsToSale(addProductsToSaleDto);
             return Ok();
         }
 
@@ -30,7 +32,7 @@ namespace POS.Controllers
                 return NotFound();
             }
             var receipt = _salesService.GenerateReceipt(sale);
-            return Ok(new { receipt });
+            return Ok(receipt);
         }
     }
 }

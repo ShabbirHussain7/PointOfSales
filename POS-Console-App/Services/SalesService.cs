@@ -14,29 +14,32 @@ namespace POS.Services
             _dbContext = context;
         }
 
-        public void AddProductToSale(int productId, int quantityToBuy)
+        public void AddProductsToSale(AddProductsToSaleDto addProductsToSaleDto)
         {
-            var product = _dbContext.Products.FirstOrDefault(p => p.Id == productId);
-            if (product != null && product.Quantity >= quantityToBuy)
+            var sale = new Sale();
+
+            foreach (var productQuantity in addProductsToSaleDto.Products)
             {
-                var sale = new Sale();
-                _dbContext.Sales.Add(sale);
-                _dbContext.SaveChanges(); // Save the sale to get its Id
-
-                var saleProductDetail = new SaleProductDetail
+                var product = _dbContext.Products.FirstOrDefault(p => p.Id == productQuantity.ProductId);
+                if (product != null && product.Quantity >= productQuantity.Quantity)
                 {
-                    SaleId = sale.Id,
-                    ProductName = product.Name,
-                    QuantityBought = quantityToBuy,
-                    Price = product.Price
-                };
+                    var saleProductDetail = new SaleProductDetail
+                    {
+                        SaleId = sale.Id,
+                        ProductName = product.Name,
+                        QuantityBought = productQuantity.Quantity,
+                        Price = product.Price
+                    };
 
-                sale.ProductDetails.Add(saleProductDetail);
-                sale.TotalAmount += product.Price * quantityToBuy;
-                product.Quantity -= quantityToBuy;
-                _dbContext.SaleProductDetails.Add(saleProductDetail);
-                _dbContext.SaveChanges();
+                    sale.ProductDetails.Add(saleProductDetail);
+                    sale.TotalAmount += product.Price * productQuantity.Quantity;
+                    product.Quantity -= productQuantity.Quantity;
+                    _dbContext.SaleProductDetails.Add(saleProductDetail);
+                }
             }
+
+            _dbContext.Sales.Add(sale);
+            _dbContext.SaveChanges();
         }
 
         public Sale GetSaleById(int id)
@@ -46,14 +49,23 @@ namespace POS.Services
                 .FirstOrDefault(s => s.Id == id);
         }
 
-        public string GenerateReceipt(Sale sale)
+        public ReceiptDto GenerateReceipt(Sale sale)
         {
-            var receipt = "Receipt:\n";
+            var receipt = new ReceiptDto
+            {
+                TotalAmount = sale.TotalAmount
+            };
+
             foreach (var detail in sale.ProductDetails)
             {
-                receipt += $"{detail.ProductName} - {detail.QuantityBought} @ {detail.Price:C}\n";
+                receipt.ProductDetails.Add(new ReceiptProductDetailDto
+                {
+                    ProductName = detail.ProductName,
+                    QuantityBought = detail.QuantityBought,
+                    Price = detail.Price
+                });
             }
-            receipt += $"Total: {sale.TotalAmount:C}\n";
+
             return receipt;
         }
     }

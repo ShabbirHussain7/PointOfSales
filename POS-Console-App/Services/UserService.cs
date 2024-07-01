@@ -1,5 +1,7 @@
 ﻿using POS.Models;
 using POS.Database;
+using Microsoft.EntityFrameworkCore;
+using POS.DTOs;
 namespace POS.Services
 {
     public class UserService
@@ -31,5 +33,6 @@ namespace POS.Services
             }
             return null;
         }
+
     }
 }

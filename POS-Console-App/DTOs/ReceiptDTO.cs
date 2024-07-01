@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace ConsoleApp.DTOs
+namespace POS.DTOs
 {
-    internal class ReceiptDTO
+    public class ReceiptDto
     {
+        public List<ReceiptProductDetailDto> ProductDetails { get; set; } = new List<ReceiptProductDetailDto>();
+        public decimal TotalAmount { get; set; }
+    }
+
+    public class ReceiptProductDetailDto
+    {
+        public string ProductName { get; set; }
+        public int QuantityBought { get; set; }
+        public decimal Price { get; set; }
     }
 }
