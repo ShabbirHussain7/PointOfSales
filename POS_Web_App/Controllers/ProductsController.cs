@@ -45,7 +45,7 @@ namespace POS.Controllers
         [HttpGet("all")]
         public IActionResult ViewProducts()
         {
-            return Ok(_productService.ViewProducts());
+            return Ok(_productService.GetAllProducts());
         }
     }
 }

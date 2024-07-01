@@ -1,38 +1,26 @@
 ﻿using POS.Models;
-using POS.Database;
-using Microsoft.EntityFrameworkCore;
-using POS.DTOs;
+using POS.Repositories;
+
 namespace POS.Services
 {
     public class UserService
     {
-        private readonly POSDbContext dbContext;
+        private readonly IUserRepository _userRepository;
 
-        public UserService(POSDbContext context)
+        public UserService(IUserRepository userRepository)
         {
-            dbContext = context;
+            _userRepository = userRepository;
         }
 
         public void AddUser(string name, string email, string password, UserRole role)
         {
-            string encryptedPassword = HashingService.ComputeHash(password);
-            dbContext.Users.Add(new User { Name = name, Email = email, Password = encryptedPassword, Role = role });
-            dbContext.SaveChanges();
+            var user = new User { Name = name, Email = email, Password = password, Role = role };
+            _userRepository.AddUser(user);
         }
 
         public User Authenticate(string email, string password)
         {
-            var user = dbContext.Users.FirstOrDefault(u => u.Email == email);
-            if (user != null)
-            {
-                string hashedPassword = HashingService.ComputeHash(password);
-                if (hashedPassword == user.Password)
-                {
-                    return user;
-                }
-            }
-            return null;
+            return _userRepository.Authenticate(email, password);
         }
-
     }
 }

@@ -1,54 +1,43 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using POS.Database;
-using POS.Models;
+﻿using POS.Models;
+using POS.Repositories;
+using System.Collections.Generic;
 
 namespace POS.Services
 {
     public class ProductService
     {
-        private readonly POSDbContext _dbContext;
+        private readonly IProductRepository _productRepository;
 
-        public ProductService(POSDbContext context)
+        public ProductService(IProductRepository productRepository)
         {
-            _dbContext = context;
+            _productRepository = productRepository;
         }
 
         public void AddProduct(string name, decimal price, int quantity)
         {
-            _dbContext.Products.Add(new Product { Name = name, Price = price, Quantity = quantity });
-            _dbContext.SaveChanges();
+            var product = new Product { Name = name, Price = price, Quantity = quantity };
+            _productRepository.AddProduct(product);
         }
 
         public void UpdateProduct(int id, decimal price, int quantity)
         {
-            var product = _dbContext.Products.FirstOrDefault(p => p.Id == id);
-            if (product != null)
-            {
-                product.Price = price;
-                product.Quantity = quantity;
-                _dbContext.SaveChanges();
-            }
+            var product = new Product { Id = id, Price = price, Quantity = quantity };
+            _productRepository.UpdateProduct(product);
         }
 
         public void RemoveProduct(int id)
         {
-            var product = _dbContext.Products.FirstOrDefault(p => p.Id == id);
-            if (product != null)
-            {
-                _dbContext.Products.Remove(product);
-                _dbContext.SaveChanges();
-            }
+            _productRepository.RemoveProduct(id);
         }
 
         public List<Product> GetAvailableProducts()
         {
-            return _dbContext.Products.Where(p => p.Quantity > 0).ToList();
+            return _productRepository.GetAvailableProducts();
         }
 
-        public List<Product> ViewProducts()
+        public List<Product> GetAllProducts()
         {
-            return _dbContext.Products.ToList();
+            return _productRepository.GetAllProducts();
         }
     }
 }

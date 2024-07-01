@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using POS.Database;
+using POS.Repositories;
 using POS.Services;
 
 internal class Program
@@ -16,9 +17,11 @@ internal class Program
             options.UseInMemoryDatabase("InMemoryDb"));
 
         builder.Services.AddScoped<HashingService>();
+        builder.Services.AddScoped<IProductRepository, ProductRepository>();
         builder.Services.AddScoped<ProductService>();
+        builder.Services.AddScoped<ISaleRepository, SaleRepository>();
         builder.Services.AddScoped<SalesService>();
-        builder.Services.AddScoped<SaleSessionService>();
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<UserService>();
         builder.Services.AddSwaggerGen(c =>
         {
