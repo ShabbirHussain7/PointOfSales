@@ -3,19 +3,21 @@ using Microsoft.OpenApi.Models;
 using POS.Database;
 using POS.Repositories;
 using POS.Services;
-
+using Microsoft.Identity.Web;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 internal class Program
 {
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddMicrosoftIdentityWebApi(builder.Configuration);
         // Add services to the container.
         builder.Services.AddControllersWithViews();
 
         builder.Services.AddDbContext<POSDbContext>(options =>
             options.UseInMemoryDatabase("InMemoryDb"));
-
+        
         builder.Services.AddScoped<HashingService>();
         builder.Services.AddScoped<IProductRepository, ProductRepository>();
         builder.Services.AddScoped<ProductService>();
@@ -38,10 +40,11 @@ internal class Program
         }
 
         app.UseHttpsRedirection();
+        app.UseAuthentication();
         app.UseStaticFiles();
 
         app.UseRouting();
-
+        
         app.UseAuthorization();
 
         app.UseSwagger();

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
 using POS.DTOs;
 using POS.Services;
 
@@ -7,6 +8,8 @@ namespace POS.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize()]
+    [RequiredScope("API.Calls")]
     public class SalesController : ControllerBase
     {
         private readonly SalesService _salesService;

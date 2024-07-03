@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
 using POS.Models;
 using POS.Services;
 
@@ -6,6 +8,8 @@ namespace POS.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize()]
+    [RequiredScope("API.Calls")]
     public class UserController : ControllerBase
     {
         private readonly UserService _userService;

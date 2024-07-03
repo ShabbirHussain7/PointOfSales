@@ -25,7 +25,6 @@ namespace POS.Repositories
             var existingProduct = _dbContext.Products.FirstOrDefault(p => p.Id == product.Id);
             if (existingProduct != null)
             {
-                existingProduct.Name = product.Name;
                 existingProduct.Price = product.Price;
                 existingProduct.Quantity = product.Quantity;
                 _dbContext.SaveChanges();
