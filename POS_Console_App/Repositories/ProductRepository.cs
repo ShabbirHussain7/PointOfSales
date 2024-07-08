@@ -5,20 +5,24 @@ using System.Linq;
 
 namespace POS.Repositories
 {
-    /*
     public class ProductRepository : IProductRepository
     {
         private readonly POSDbContext _dbContext;
+        private readonly CosmosDbContext _cosmosDbContext;
 
-        public ProductRepository(POSDbContext dbContext)
+        public ProductRepository(POSDbContext dbContext, CosmosDbContext cosmosDbContext)
         {
             _dbContext = dbContext;
+            _cosmosDbContext = cosmosDbContext;
         }
 
         public void AddProduct(Product product)
         {
             _dbContext.Products.Add(product);
             _dbContext.SaveChanges();
+
+            _cosmosDbContext.Products.Add(product);
+            _cosmosDbContext.SaveChanges();
         }
 
         public void UpdateProduct(Product product)
@@ -29,6 +33,14 @@ namespace POS.Repositories
                 existingProduct.Price = product.Price;
                 existingProduct.Quantity = product.Quantity;
                 _dbContext.SaveChanges();
+
+                var cosmosProduct = _cosmosDbContext.Products.FirstOrDefault(p => p.Id == product.Id);
+                if (cosmosProduct != null)
+                {
+                    cosmosProduct.Price = product.Price;
+                    cosmosProduct.Quantity = product.Quantity;
+                    _cosmosDbContext.SaveChanges();
+                }
             }
         }
 
@@ -39,6 +51,13 @@ namespace POS.Repositories
             {
                 _dbContext.Products.Remove(product);
                 _dbContext.SaveChanges();
+
+                var cosmosProduct = _cosmosDbContext.Products.FirstOrDefault(p => p.Id == id);
+                if (cosmosProduct != null)
+                {
+                    _cosmosDbContext.Products.Remove(cosmosProduct);
+                    _cosmosDbContext.SaveChanges();
+                }
             }
         }
 
@@ -52,5 +71,4 @@ namespace POS.Repositories
             return _dbContext.Products.ToList();
         }
     }
-    */
 }

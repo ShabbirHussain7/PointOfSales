@@ -11,7 +11,6 @@ namespace POS.Services
 
         public AzureStorageService(string connectionString)
         {
-            Console.WriteLine(connectionString);
             _blobServiceClient = new BlobServiceClient(connectionString);
         }
 
@@ -36,7 +35,6 @@ namespace POS.Services
             var blobs = new List<BlobDownloadInfo>();
             await foreach (var blobItem in containerClient.GetBlobsAsync())
             {
-                Console.WriteLine($"{blobItem.Name}");
                 var blobClient = containerClient.GetBlobClient(blobItem.Name);
                 var response = await blobClient.DownloadAsync();
                 blobs.Add(response.Value);

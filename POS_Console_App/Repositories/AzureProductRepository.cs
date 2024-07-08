@@ -16,14 +16,13 @@ namespace POS.Repositories
 
         public void AddProduct(Product product)
         {
-            Console.WriteLine("adding product in repo: ", product.Name);
             var stream = SerializeProduct(product);
             _azureStorageService.UploadProductAsync(product.Id.ToString(), stream).Wait();
         }
 
         public void UpdateProduct(Product product)
         {
-            AddProduct(product); // Simplified: Overwrite the existing product
+            AddProduct(product); // Overwrite the existing product
         }
 
         public void RemoveProduct(int id)

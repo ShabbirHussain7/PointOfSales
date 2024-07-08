@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Extensions.AspNetCore.Configuration.Secrets;
+using Microsoft.Azure.Cosmos;
 
 internal class Program
 {
@@ -42,13 +43,21 @@ internal class Program
 
         // Retrieve the connection string from Key Vault
         var secretClient = new SecretClient(new Uri($"https://{keyVaultName}.vault.azure.net/"), new DefaultAzureCredential());
-        KeyVaultSecret secret = secretClient.GetSecret(builder.Configuration["Secrets:StorageConnectionString"]);
-        var storageConnectionString = secret.Value;
+        KeyVaultSecret secret = secretClient.GetSecret(builder.Configuration["Secrets:CosmosConnectionString"]);
+        var cosmosDbConnectionString = secret.Value;
 
-        // Register the AzureStorageService with the connection string from Key Vault
-        builder.Services.AddSingleton(new AzureStorageService(storageConnectionString));
-        builder.Services.AddTransient<IProductRepository, AzureProductRepository>();
+        // Register CosmosClient as singleton
+        builder.Services.AddSingleton(new CosmosClient(cosmosDbConnectionString));
+
+        // Add DbContext for Cosmos DB
+        builder.Services.AddDbContext<CosmosDbContext>(options => options.UseCosmos(cosmosDbConnectionString, "POS-DB"));
+
+        // Register repositories and services
+        builder.Services.AddScoped<IProductRepository, ProductRepository>();
         builder.Services.AddScoped<ProductService>();
+
+        // Add controllers
+        builder.Services.AddControllers();
 
         // Configure Swagger
         builder.Services.AddSwaggerGen(c =>
