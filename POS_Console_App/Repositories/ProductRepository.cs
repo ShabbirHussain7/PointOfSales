@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace POS.Repositories
 {
+    /*
     public class ProductRepository : IProductRepository
     {
         private readonly POSDbContext _dbContext;
@@ -51,4 +52,5 @@ namespace POS.Repositories
             return _dbContext.Products.ToList();
         }
     }
+    */
 }

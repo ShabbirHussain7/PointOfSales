@@ -16,6 +16,7 @@ namespace POS.Repositories
 
         public User AddUser(User user)
         {
+            Console.WriteLine("adding user: ", user);
             string encryptedPassword = HashingService.ComputeHash(user.Password);
             user.Password = encryptedPassword;
             _dbContext.Users.Add(user);

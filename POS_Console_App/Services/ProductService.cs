@@ -15,6 +15,8 @@ namespace POS.Services
 
         public void AddProduct(string name, decimal price, int quantity)
         {
+
+            Console.WriteLine("adding product in service: ", name);
             var product = new Product { Name = name, Price = price, Quantity = quantity };
             _productRepository.AddProduct(product);
         }

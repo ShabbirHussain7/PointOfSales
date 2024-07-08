@@ -28,6 +28,7 @@ namespace POS.Controllers
         [HttpPost]
         public IActionResult AddProduct(Product product)
         {
+            Console.WriteLine("adding product in controller: ", product.Name);
             _productService.AddProduct(product.Name, product.Price, product.Quantity);
             return CreatedAtAction(nameof(GetAvailableProducts), new { id = product.Id }, product);
         }
